@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getSiteConfig } from '@/lib/galleries';
+
+const site = getSiteConfig();
+---
+<BaseLayout
+  title="About"
+  currentSlug="about"
+  description={`About ${site.ownerName} — photographer.`}
+>
+  <article class="info-page">
+    <h1>About</h1>
+
+    <p>
+      {/* Replace this with a short bio. Talk about who you are, where you're based,
+          what kind of photography you do, and anything you'd like visitors to know. */}
+      I'm {site.ownerName}, a photographer based in [your city]. This is the placeholder
+      bio — replace it with your own story.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      {site.social.email && (
+        <>Email: <a href={`mailto:${site.social.email}`}>{site.social.email}</a><br /></>
+      )}
+      {site.social.instagram && (
+        <>Instagram: <a href={site.social.instagram} target="_blank" rel="noopener noreferrer">@{site.social.instagram.split('/').filter(Boolean).pop()}</a><br /></>
+      )}
+      {site.social.facebook && (
+        <>Facebook: <a href={site.social.facebook} target="_blank" rel="noopener noreferrer">{site.social.facebook}</a></>
+      )}
+    </p>
+  </article>
+</BaseLayout>

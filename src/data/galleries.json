@@ -1,0 +1,25 @@
+{
+  "site": {
+    "title": "Your Name Photography",
+    "tagline": "Photographer based in [Your City]",
+    "description": "Photography portfolio — galleries, exhibitions, and contact info.",
+    "ownerName": "Your Name",
+    "social": {
+      "instagram": "",
+      "facebook": "",
+      "email": ""
+    }
+  },
+  "galleries": [
+    {
+      "slug": "sample-gallery-1",
+      "title": "Sample Gallery 1",
+      "description": "Replace this with a description of the gallery — a sentence or two."
+    },
+    {
+      "slug": "sample-gallery-2",
+      "title": "Sample Gallery 2",
+      "description": "Replace this with a description of the gallery — a sentence or two."
+    }
+  ]
+}

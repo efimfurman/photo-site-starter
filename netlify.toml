@@ -1,0 +1,19 @@
+# Netlify build & redirects configuration.
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Once you connect a custom domain in the Netlify dashboard, uncomment and update
+# this redirect to send www traffic to the canonical (non-www) version.
+# Replace `yourdomain.com` with your real domain.
+#
+# [[redirects]]
+#   from = "https://www.yourdomain.com/*"
+#   to = "https://yourdomain.com/:splat"
+#   status = 301
+#   force = true

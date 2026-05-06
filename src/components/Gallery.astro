@@ -1,0 +1,92 @@
+---
+import type { GalleryImage } from '@/lib/galleries';
+
+interface Props {
+  images: GalleryImage[];
+  galleryTitle: string;
+}
+
+const { images, galleryTitle } = Astro.props;
+---
+{images.length === 0 ? (
+  <div class="gallery-empty">
+    <p>This gallery doesn't have any photos yet.</p>
+    <p class="gallery-empty-hint">
+      To add photos: drop image files into <code>src/content/galleries/{galleryTitle}/</code>
+      and prefix the filenames with numbers (<code>01-</code>, <code>02-</code>, ...) to control the order.
+    </p>
+  </div>
+) : (
+  <div class="gallery">
+    <h1 class="gallery-title">{galleryTitle}</h1>
+
+    <div class="gallery-grid">
+      {images.map((image, idx) => (
+        <button
+          type="button"
+          class="gallery-thumb"
+          data-index={idx}
+          aria-label={`Open photo ${idx + 1}: ${image.alt}`}
+        >
+          <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+        </button>
+      ))}
+    </div>
+
+    <!-- Lightbox dialog: opens when a thumbnail is clicked -->
+    <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+      <button type="button" class="lightbox-close" aria-label="Close">×</button>
+      <button type="button" class="lightbox-prev" aria-label="Previous photo">‹</button>
+      <img class="lightbox-image" alt="" />
+      <button type="button" class="lightbox-next" aria-label="Next photo">›</button>
+      <p class="lightbox-caption" aria-live="polite"></p>
+    </dialog>
+
+    <script is:inline define:vars={{ images }}>
+      // Vanilla-JS lightbox using <dialog>. Keep this small and easy for Claude to redesign.
+      (() => {
+        const dialog = document.getElementById('lightbox');
+        if (!dialog) return;
+
+        const img = dialog.querySelector('.lightbox-image');
+        const caption = dialog.querySelector('.lightbox-caption');
+        const closeBtn = dialog.querySelector('.lightbox-close');
+        const prevBtn = dialog.querySelector('.lightbox-prev');
+        const nextBtn = dialog.querySelector('.lightbox-next');
+        const thumbs = document.querySelectorAll('.gallery-thumb');
+
+        let current = 0;
+
+        function show(index) {
+          current = (index + images.length) % images.length;
+          img.src = images[current].src;
+          img.alt = images[current].alt;
+          caption.textContent = `${current + 1} / ${images.length}`;
+        }
+
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener('click', () => {
+            show(parseInt(thumb.dataset.index || '0', 10));
+            dialog.showModal();
+          });
+        });
+
+        closeBtn?.addEventListener('click', () => dialog.close());
+        prevBtn?.addEventListener('click', () => show(current - 1));
+        nextBtn?.addEventListener('click', () => show(current + 1));
+
+        // Click on the dialog backdrop (outside the image) closes it.
+        dialog.addEventListener('click', (e) => {
+          if (e.target === dialog) dialog.close();
+        });
+
+        // Keyboard navigation while open.
+        document.addEventListener('keydown', (e) => {
+          if (!dialog.open) return;
+          if (e.key === 'ArrowLeft') show(current - 1);
+          if (e.key === 'ArrowRight') show(current + 1);
+        });
+      })();
+    </script>
+  </div>
+)}

@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Gallery from '@/components/Gallery.astro';
+import { getAllGalleries } from '@/lib/galleries';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  const galleries = getAllGalleries();
+  return galleries.map((gallery) => ({
+    params: { gallery: gallery.slug },
+    props: { gallery },
+  }));
+};
+
+const { gallery } = Astro.props;
+---
+<BaseLayout
+  title={gallery.title}
+  currentSlug={gallery.slug}
+  description={gallery.description}
+>
+  <Gallery images={gallery.images} galleryTitle={gallery.title} />
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getAllGalleries, getSiteConfig } from '@/lib/galleries';
+
+const site = getSiteConfig();
+const galleries = getAllGalleries();
+---
+<BaseLayout title="Home" currentSlug="home">
+  <section class="home-hero">
+    <h1>{site.title}</h1>
+    {site.tagline && <p>{site.tagline}</p>}
+  </section>
+
+  <section class="home-galleries" aria-label="Galleries">
+    {galleries.map((gallery) => (
+      <a href={`/${gallery.slug}/`} class="home-gallery-card">
+        <h2>{gallery.title}</h2>
+        {gallery.description && <p>{gallery.description}</p>}
+      </a>
+    ))}
+  </section>
+</BaseLayout>

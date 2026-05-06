@@ -1,0 +1,32 @@
+---
+import { getAllGalleries } from '@/lib/galleries';
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+const galleries = getAllGalleries();
+---
+<nav class="site-nav" aria-label="Main">
+  <ul>
+    {galleries.map((gallery) => (
+      <li>
+        <a
+          href={`/${gallery.slug}/`}
+          class:list={['nav-link', { active: currentSlug === gallery.slug }]}
+        >
+          {gallery.title}
+        </a>
+      </li>
+    ))}
+    <li>
+      <a
+        href="/about/"
+        class:list={['nav-link', { active: currentSlug === 'about' }]}
+      >
+        About
+      </a>
+    </li>
+  </ul>
+</nav>

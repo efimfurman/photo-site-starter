@@ -38,7 +38,7 @@ Same three programs, slightly different installers — Fima will help in person 
 
 ### 3. Make your own copy of this starter
 
-- [ ] Open [this repository on GitHub](https://github.com/USERNAME/photo-site-starter) (Fima will send you the link).
+- [ ] Open [this repository on GitHub](https://github.com/efimfurman/photo-site-starter) (Fima will send you the link).
 - [ ] Click the green **"Use this template"** button → **"Create a new repository"**.
 - [ ] Name it something like `your-name-photography` (lowercase, no spaces — use dashes).
 - [ ] Set it to **Public** (it can be made private later if you want).
